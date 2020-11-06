@@ -12,12 +12,13 @@ public class Questions {
     //Questions questions = new Questions()
     //questions.getQuestions(5) // 5 == questions per round
 
-    public Questions(ArrayList<Question> questions, ArrayList<Question> usedQuestions) {
-        this.questions = new ArrayList<Question>();
-        this.questions = questions;
+    public Questions() {
+        questions = new ArrayList<>();
+        usedQuestions = new ArrayList<>();
+        questionsMaker();
+    }
 
-        this.usedQuestions = new ArrayList<Question>();
-        this.usedQuestions = usedQuestions;
+    public void questionsMaker() {
 
         String filename = "questions.txt";
         try {
@@ -32,12 +33,12 @@ public class Questions {
                 String question = data[1];  //erwtisi
 
                 ArrayList answers = new ArrayList<String>();
-                answers.add(data[2]);
-                answers.add(data[3]);
-                answers.add(data[4]);
-                answers.add(data[5]);
+                answers.add(data[2]);  //ans1
+                answers.add(data[3]);  //ans2
+                answers.add(data[4]);  //ans3
+                answers.add(data[5]);  //ans4
 
-                String correctAnswer = data[6];
+                String correctAnswer = data[6];  //correct answer
 
                 Question newQuestion = new Question(category, question, answers, correctAnswer);
                 questions.add(newQuestion);

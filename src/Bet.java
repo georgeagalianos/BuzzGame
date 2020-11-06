@@ -1,33 +1,83 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bet {
     Scanner console = new Scanner(System.in);
-    private int coins=0;
-    private Player player1;
-    public void BET(Player player1,){
-        this.player1=player1;
-        boolean flag=false;
-        do{
-            System.out.print("Enter the coins of the bet:");
-            coins= console.nextInt();
-            if(coins!=250 || coins!=500 || coins!=750 || coins!=1000)
-            {
-                System.out.println("DEN YPARXEI TETOI POSO NA PONTARETE");
-            }
-            else{
-                flag=true;
-            }
-        }while(flag==true);
+    private int points=0;
+    private Player player;
+    private int number_rounds;
+    private int number_questions;
 
+    public Bet(Player player, int numRounds, int numQuestions){
+        this.player = player;
+        this.number_rounds = numRounds;
+        this.number_questions = numQuestions;
+        Game();
     }
 
-    public void ANSWER(boolean flag){
-        if(flag==true){
-            player1.addPoints(coins);
+    private void Game() {
+        Questions questions = new Questions();
+        ArrayList<Question> roundQuestions;
+
+        Scanner scanner = new Scanner(System.in);
+
+        int currentAnswer;
+
+        Question currentQuestion;
+
+        int roundCounter = 1;
+        int questionCounter;
+
+        for(int i=0 ; i<number_rounds ; i++) {
+            roundQuestions = questions.getQuestions(number_questions);
+            System.out.println("Round " + roundCounter);
+            roundCounter++;
+
+            questionCounter = 1;
+
+            for(int j=0 ; j<number_questions ; j++) {
+                System.out.println("Question :" + questionCounter);
+                System.out.print(player.getName() + "\'s points" + player.getPoints() + "\n");
+
+                currentQuestion = roundQuestions.get(j);
+
+                currentQuestion.printCategory();
+
+                System.out.println("How much do you want to bid in this category?");
+                System.out.println("1:250\t2:500\t3:750\t4:1000");
+                int bider = scanner.nextInt();
+                switch(bider) {
+                    case 1:
+                        player.setBid(250);
+                        break;
+                    case 2:
+                        player.setBid(500);
+                        break;
+                    case 3:
+                        player.setBid(750);
+                        break;
+                    case 4:
+                        player.setBid(1000);
+                        break;
+                }
+
+                currentQuestion.printQuestion();
+                currentQuestion.printAnswers();
+
+                System.out.println("Give an answer : ");
+                currentAnswer = scanner.nextInt();
+
+                if(currentAnswer == currentQuestion.getCorrectAnswer()) {
+                    player.addPoints(player.getBid());
+                }
+                else {
+                    player.addPoints(-player.getBid());
+                }
+                questionCounter++;
+            }
         }
-        else {
-            player1.addPoints(-coins);
-        }
+        scanner.close();
+        System.out.println("Your scor : " + player.getPoints());
     }
 
 
