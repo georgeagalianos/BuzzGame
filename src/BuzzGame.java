@@ -5,6 +5,8 @@ public class BuzzGame {
         Player player;
         System.out.print("give a name : ");
         player = new Player();
-        System.out.print(player);
+        System.out.println(player);
+        System.out.print("o girgrws ton pairnei");
+
     }
 }
