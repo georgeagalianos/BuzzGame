@@ -1,1 +1,1 @@
-A 'questins' game made in java.
+A 'questions' game made in java.
